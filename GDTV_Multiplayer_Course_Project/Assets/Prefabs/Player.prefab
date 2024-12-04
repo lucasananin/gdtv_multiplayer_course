@@ -55,7 +55,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8058069109420930560}
-  - component: {fileID: 5564428740077410171}
+  - component: {fileID: 1926274445674428442}
   m_Layer: 0
   m_Name: TurretPivot
   m_TagString: Untagged
@@ -79,7 +79,7 @@ Transform:
   - {fileID: 6404291652801168761}
   m_Father: {fileID: 3167459925165682355}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5564428740077410171
+--- !u!114 &1926274445674428442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1154502523892643640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b9c177c5bd3c4146b96aeb35b6e4d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseUnreliableDeltas: 0
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 9015666539000935497}
   - component: {fileID: 3339877867118210524}
   - component: {fileID: 8664019392535634972}
-  - component: {fileID: 6824971604649999083}
+  - component: {fileID: 2377025471872666777}
   m_Layer: 0
   m_Name: Sprite_Tracks
   m_TagString: Untagged
@@ -242,7 +242,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.75, y: 2.05}
   m_EdgeRadius: 0
---- !u!114 &6824971604649999083
+--- !u!114 &2377025471872666777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1576459971185095939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b9c177c5bd3c4146b96aeb35b6e4d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseUnreliableDeltas: 0
@@ -283,7 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 925304665115177584}
   - component: {fileID: 3675191133387623677}
-  - component: {fileID: -5430590920894013558}
+  - component: {fileID: 4409712796143577150}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -328,7 +328,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &-5430590920894013558
+--- !u!114 &4409712796143577150
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4551376733347561600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b9c177c5bd3c4146b96aeb35b6e4d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseUnreliableDeltas: 0
