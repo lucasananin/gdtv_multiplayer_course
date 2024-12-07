@@ -77,6 +77,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6404291652801168761}
+  - {fileID: 4566186861832006426}
   m_Father: {fileID: 3167459925165682355}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1926274445674428442
@@ -287,6 +288,7 @@ GameObject:
   - component: {fileID: 4409712796143577150}
   - component: {fileID: 3048155447475508159}
   - component: {fileID: 8126657145572894118}
+  - component: {fileID: 1345735462421669408}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -420,6 +422,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: 6bb5cfaea7575f447a079faf743b202d, type: 2}
   _turretTransform: {fileID: 8058069109420930560}
+--- !u!114 &1345735462421669408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551376733347561600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcc55dfaedb97d4a9ebaf5c996bc4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: 6bb5cfaea7575f447a079faf743b202d, type: 2}
+  _serverProjectilePrefab: {fileID: 5095503989797113566, guid: 23b5373a6ba9127499af0b742ed8e30d, type: 3}
+  _clientProjectilePrefab: {fileID: 5095503989797113566, guid: 557660dab47fff240b7ab353d23d554c, type: 3}
+  _muzzle: {fileID: 4566186861832006426}
+  _projectileSpeed: 20
 --- !u!1 &6598169769573890530
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,3 +607,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8652437251238210085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4566186861832006426}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4566186861832006426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8652437251238210085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8058069109420930560}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
