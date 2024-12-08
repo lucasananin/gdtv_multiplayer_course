@@ -11,10 +11,6 @@ public class ProjectileLauncher : NetworkBehaviour
     [SerializeField] Transform _muzzle = null;
     [Space]
     [SerializeField] float _projectileSpeed = 20f;
-    [Space]
-    [SerializeField] SpriteRenderer _renderer = null;
-    [SerializeField] float _duration = 0.1f;
-    private float _timer = 0f;
 
     public event System.Action OnShoot = null;
 
@@ -34,23 +30,14 @@ public class ProjectileLauncher : NetworkBehaviour
         _inputReader.OnPrimaryFireEvent -= _inputReader_OnPrimaryFireEvent;
     }
 
-    private void Update()
-    {
-        _timer += Time.deltaTime;
+    //private void Update()
+    //{
+    //    if (!IsOwner) return;
+    //    if (!_shouldFire) return;
 
-        //if (_timer > _duration && _renderer.gameObject.activeSelf)
-        if (_timer > _duration && _renderer.enabled)
-        {
-            //_renderer.enabled = false;
-            //_renderer.gameObject.SetActive(false);
-        }
-
-        if (!IsOwner) return;
-        //if (!_shouldFire) return;
-
-        //PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
-        //SpawnDummyProjectile(_muzzle.position, _muzzle.up);
-    }
+    //    PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
+    //    SpawnDummyProjectile(_muzzle.position, _muzzle.up);
+    //}
 
     private void _inputReader_OnPrimaryFireEvent(bool _value)
     {
@@ -60,9 +47,6 @@ public class ProjectileLauncher : NetworkBehaviour
         {
             PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
             SpawnDummyProjectile(_muzzle.position, _muzzle.up);
-            //ShowMuzzleFlash();
-            //ShowMuzzleFlashClientRpc();
-            //ShowMuzzleFlashServerRpc();
             OnShoot?.Invoke();
         }
     }
@@ -90,8 +74,6 @@ public class ProjectileLauncher : NetworkBehaviour
 
     private void SpawnDummyProjectile(Vector3 _position, Vector3 _direction)
     {
-        //ShowMuzzleFlash();
-
         var _instance = Instantiate(_clientProjectilePrefab, _position, Quaternion.identity);
         _instance.transform.up = _direction;
 
@@ -99,24 +81,5 @@ public class ProjectileLauncher : NetworkBehaviour
         {
             _rb.velocity = _direction * _projectileSpeed;
         }
-    }
-
-    public void ShowMuzzleFlash()
-    {
-        _timer = 0f;
-        //_renderer.enabled = true;
-        //_renderer.gameObject.SetActive(true);
-    }
-
-    [ClientRpc]
-    public void ShowMuzzleFlashClientRpc()
-    {
-        ShowMuzzleFlash();
-    }
-
-    [ServerRpc]
-    public void ShowMuzzleFlashServerRpc()
-    {
-        ShowMuzzleFlash();
     }
 }

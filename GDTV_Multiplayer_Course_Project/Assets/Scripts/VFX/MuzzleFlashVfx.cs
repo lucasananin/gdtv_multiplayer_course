@@ -13,30 +13,39 @@ public class MuzzleFlashVfx : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        //_renderer.enabled = false;
+        _renderer.enabled = false;
         //if (!IsOwner) return;
-        _projectileLauncher.OnShoot += Fodase;
-        _projectileLauncher.OnShoot += PlayClientRpc;
-        _projectileLauncher.OnShoot += PlayServerRpc;
+        _projectileLauncher.OnShoot += PlayAll;
+        //_projectileLauncher.OnShoot += Fodase;
+        //_projectileLauncher.OnShoot += PlayClientRpc;
+        //_projectileLauncher.OnShoot += PlayServerRpc;
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
         //if (!IsOwner) return;
-        _projectileLauncher.OnShoot -= Fodase;
-        _projectileLauncher.OnShoot -= PlayClientRpc;
-        _projectileLauncher.OnShoot -= PlayServerRpc;
+        _projectileLauncher.OnShoot -= PlayAll;
+        //_projectileLauncher.OnShoot -= Fodase;
+        //_projectileLauncher.OnShoot -= PlayClientRpc;
+        //_projectileLauncher.OnShoot -= PlayServerRpc;
     }
 
-    private void Update()
-    {
-        _timer += Time.deltaTime;
+    //private void Update()
+    //{
+    //    _timer += Time.deltaTime;
 
-        if (_timer > _duration && _renderer.enabled)
-        {
-            _renderer.enabled = false;
-        }
+    //    if (_timer > _duration && _renderer.enabled)
+    //    {
+    //        _renderer.enabled = false;
+    //    }
+    //}
+
+    private void PlayAll()
+    {
+        Play();
+        PlayServerRpc();
+        PlayClientRpc();
     }
 
     public void Fodase()
@@ -50,14 +59,15 @@ public class MuzzleFlashVfx : NetworkBehaviour
     [ServerRpc]
     public void PlayServerRpc()
     {
-        Fodase();
+        //Fodase();
+        Play();
     }
 
     [ClientRpc]
     private void PlayClientRpc()
     {
-        Fodase();
-        //Play();
+        //Fodase();
+        Play();
     }
 
     private void Play()
