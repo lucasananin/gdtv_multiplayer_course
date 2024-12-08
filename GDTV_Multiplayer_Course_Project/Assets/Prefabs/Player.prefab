@@ -375,6 +375,7 @@ GameObject:
   - component: {fileID: 8126657145572894118}
   - component: {fileID: 1345735462421669408}
   - component: {fileID: 2035945531482267116}
+  - component: {fileID: 8232112592696679067}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -525,6 +526,8 @@ MonoBehaviour:
   _clientProjectilePrefab: {fileID: 5095503989797113566, guid: 557660dab47fff240b7ab353d23d554c, type: 3}
   _muzzle: {fileID: 4566186861832006426}
   _projectileSpeed: 20
+  _renderer: {fileID: 1165713023632920434}
+  _duration: 0.1
 --- !u!114 &2035945531482267116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,6 +543,21 @@ MonoBehaviour:
   _sprites:
   - {fileID: 190376188483829949}
   - {fileID: 6059790280107975688}
+--- !u!114 &8232112592696679067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551376733347561600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84624d6eb901094fb0e7f54c7236536, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectileLauncher: {fileID: 1345735462421669408}
+  _renderer: {fileID: 1165713023632920434}
+  _duration: 0.08
 --- !u!1 &6598169769573890530
 GameObject:
   m_ObjectHideFlags: 0

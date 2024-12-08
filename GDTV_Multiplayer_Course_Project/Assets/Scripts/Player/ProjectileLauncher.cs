@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -12,8 +11,14 @@ public class ProjectileLauncher : NetworkBehaviour
     [SerializeField] Transform _muzzle = null;
     [Space]
     [SerializeField] float _projectileSpeed = 20f;
+    [Space]
+    [SerializeField] SpriteRenderer _renderer = null;
+    [SerializeField] float _duration = 0.1f;
+    private float _timer = 0f;
 
-    private bool _shouldFire = false;
+    public event System.Action OnShoot = null;
+
+    //private bool _shouldFire = false;
 
     public override void OnNetworkSpawn()
     {
@@ -29,23 +34,32 @@ public class ProjectileLauncher : NetworkBehaviour
         _inputReader.OnPrimaryFireEvent -= _inputReader_OnPrimaryFireEvent;
     }
 
-    //private void Update()
-    //{
-    //    if (!IsOwner) return;
-    //    if (!_shouldFire) return;
+    private void Update()
+    {
+        _timer += Time.deltaTime;
 
-    //    PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
-    //    SpawnDummyProjectile(_muzzle.position, _muzzle.up);
-    //}
+        if (_timer > _duration && _renderer.gameObject.activeSelf)
+        {
+            //_renderer.enabled = false;
+            _renderer.gameObject.SetActive(false);
+        }
+
+        if (!IsOwner) return;
+        //if (!_shouldFire) return;
+
+        //PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
+        //SpawnDummyProjectile(_muzzle.position, _muzzle.up);
+    }
 
     private void _inputReader_OnPrimaryFireEvent(bool _value)
     {
-        _shouldFire = _value;
+        //_shouldFire = _value;
 
         if (_value)
         {
             PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
             SpawnDummyProjectile(_muzzle.position, _muzzle.up);
+            OnShoot?.Invoke();
         }
     }
 
@@ -54,6 +68,12 @@ public class ProjectileLauncher : NetworkBehaviour
     {
         var _instance = Instantiate(_serverProjectilePrefab, _position, Quaternion.identity);
         _instance.transform.up = _direction;
+
+        if (_instance.TryGetComponent(out Rigidbody2D _rb))
+        {
+            _rb.velocity = _direction * _projectileSpeed;
+        }
+
         SpawnDummyProjectileClientRpc(_position, _direction);
     }
 
@@ -66,7 +86,15 @@ public class ProjectileLauncher : NetworkBehaviour
 
     private void SpawnDummyProjectile(Vector3 _position, Vector3 _direction)
     {
+        _timer = 0f;
+        _renderer.gameObject.SetActive(true);
+
         var _instance = Instantiate(_clientProjectilePrefab, _position, Quaternion.identity);
         _instance.transform.up = _direction;
+
+        if (_instance.TryGetComponent(out Rigidbody2D _rb))
+        {
+            _rb.velocity = _direction * _projectileSpeed;
+        }
     }
 }
