@@ -38,10 +38,11 @@ public class ProjectileLauncher : NetworkBehaviour
     {
         _timer += Time.deltaTime;
 
-        if (_timer > _duration && _renderer.gameObject.activeSelf)
+        //if (_timer > _duration && _renderer.gameObject.activeSelf)
+        if (_timer > _duration && _renderer.enabled)
         {
             //_renderer.enabled = false;
-            _renderer.gameObject.SetActive(false);
+            //_renderer.gameObject.SetActive(false);
         }
 
         if (!IsOwner) return;
@@ -59,6 +60,9 @@ public class ProjectileLauncher : NetworkBehaviour
         {
             PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
             SpawnDummyProjectile(_muzzle.position, _muzzle.up);
+            //ShowMuzzleFlash();
+            //ShowMuzzleFlashClientRpc();
+            //ShowMuzzleFlashServerRpc();
             OnShoot?.Invoke();
         }
     }
@@ -86,8 +90,7 @@ public class ProjectileLauncher : NetworkBehaviour
 
     private void SpawnDummyProjectile(Vector3 _position, Vector3 _direction)
     {
-        _timer = 0f;
-        _renderer.gameObject.SetActive(true);
+        //ShowMuzzleFlash();
 
         var _instance = Instantiate(_clientProjectilePrefab, _position, Quaternion.identity);
         _instance.transform.up = _direction;
@@ -96,5 +99,24 @@ public class ProjectileLauncher : NetworkBehaviour
         {
             _rb.velocity = _direction * _projectileSpeed;
         }
+    }
+
+    public void ShowMuzzleFlash()
+    {
+        _timer = 0f;
+        //_renderer.enabled = true;
+        //_renderer.gameObject.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void ShowMuzzleFlashClientRpc()
+    {
+        ShowMuzzleFlash();
+    }
+
+    [ServerRpc]
+    public void ShowMuzzleFlashServerRpc()
+    {
+        ShowMuzzleFlash();
     }
 }

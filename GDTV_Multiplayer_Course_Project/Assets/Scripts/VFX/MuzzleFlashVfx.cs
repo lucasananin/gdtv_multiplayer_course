@@ -10,37 +10,47 @@ public class MuzzleFlashVfx : NetworkBehaviour
     [SerializeField] float _duration = 0.1f;
     private float _timer = 0f;
 
-    //public override void OnNetworkSpawn()
-    //{
-    //    base.OnNetworkSpawn();
-    //    _renderer.enabled = false;
-    //    //if (!IsOwner) return;
-    //    _projectileLauncher.OnShoot += PlayClientRpc;
-    //    _projectileLauncher.OnShoot += Fodase;
-    //}
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        //_renderer.enabled = false;
+        //if (!IsOwner) return;
+        _projectileLauncher.OnShoot += Fodase;
+        _projectileLauncher.OnShoot += PlayClientRpc;
+        _projectileLauncher.OnShoot += PlayServerRpc;
+    }
 
-    //public override void OnNetworkDespawn()
-    //{
-    //    base.OnNetworkDespawn();
-    //    //if (!IsOwner) return;
-    //    _projectileLauncher.OnShoot -= PlayClientRpc;
-    //    _projectileLauncher.OnShoot -= Fodase;
-    //}
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+        //if (!IsOwner) return;
+        _projectileLauncher.OnShoot -= Fodase;
+        _projectileLauncher.OnShoot -= PlayClientRpc;
+        _projectileLauncher.OnShoot -= PlayServerRpc;
+    }
 
-    //private void Update()
-    //{
-    //    _timer += Time.deltaTime;
+    private void Update()
+    {
+        _timer += Time.deltaTime;
 
-    //    if (_timer > _duration && _renderer.enabled)
-    //    {
-    //        _renderer.enabled = false;
-    //    }
-    //}
+        if (_timer > _duration && _renderer.enabled)
+        {
+            _renderer.enabled = false;
+        }
+    }
 
     public void Fodase()
     {
         _timer = 0f;
         _renderer.enabled = true;
+        //PlayServerRpc();
+        //PlayClientRpc();
+    }
+
+    [ServerRpc]
+    public void PlayServerRpc()
+    {
+        Fodase();
     }
 
     [ClientRpc]
