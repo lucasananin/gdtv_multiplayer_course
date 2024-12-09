@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 3048155447475508159}
   - component: {fileID: 8126657145572894118}
   - component: {fileID: 1345735462421669408}
+  - component: {fileID: 7628796628603888701}
   - component: {fileID: 8232112592696679067}
   - component: {fileID: 2035945531482267116}
   m_Layer: 0
@@ -526,8 +527,21 @@ MonoBehaviour:
   _clientProjectilePrefab: {fileID: 5095503989797113566, guid: 557660dab47fff240b7ab353d23d554c, type: 3}
   _muzzle: {fileID: 4566186861832006426}
   _projectileSpeed: 20
-  _renderer: {fileID: 1165713023632920434}
-  _duration: 0.1
+--- !u!114 &7628796628603888701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551376733347561600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3498f6dfe9783408d08b88ff5e7b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MaxHealth>k__BackingField: 100
+  _currentHealth:
+    m_InternalValue: 0
 --- !u!114 &8232112592696679067
 MonoBehaviour:
   m_ObjectHideFlags: 0
