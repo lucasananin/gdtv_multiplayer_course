@@ -6,16 +6,21 @@ using UnityEngine;
 public class Health : NetworkBehaviour
 {
     [field: SerializeField] public int MaxHealth { get; set; } = 100;
-    [SerializeField] NetworkVariable<int> _currentHealth = new();
-
-    private bool _isDead = false;
+    public NetworkVariable<int> CurrentHealth = new();
 
     public event System.Action<Health> OnDie = null;
 
     public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
-        _currentHealth.Value = MaxHealth;
+        CurrentHealth.Value = MaxHealth;
+    }
+
+    [ContextMenu("TakeRandomDamage()")]
+    public void TakeRandomDamage()
+    {
+        var _randomValue = Random.Range(12, 34);
+        TakeDamage(_randomValue);
     }
 
     public void TakeDamage(int _value)
@@ -30,15 +35,24 @@ public class Health : NetworkBehaviour
 
     public void ModifyHealth(int _value)
     {
-        if (_isDead) return;
+        if (IsDead()) return;
 
-        _currentHealth.Value += _value;
-        
-        if (_currentHealth.Value <= 0)
+        var _newHealth = CurrentHealth.Value + _value;
+        CurrentHealth.Value = Mathf.Clamp(_newHealth, 0, MaxHealth);
+
+        if (CurrentHealth.Value <= 0)
         {
-            _currentHealth.Value = 0;
-            _isDead = true;
             OnDie?.Invoke(this);
         }
+    }
+
+    public float GetNormalizedValue()
+    {
+        return (float)CurrentHealth.Value / MaxHealth;
+    }
+
+    public bool IsDead()
+    {
+        return CurrentHealth.Value <= 0;
     }
 }
