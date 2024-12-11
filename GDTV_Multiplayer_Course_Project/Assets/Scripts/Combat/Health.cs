@@ -17,7 +17,7 @@ public class Health : NetworkBehaviour
     }
 
     [ContextMenu("TakeRandomDamage()")]
-    public void TakeRandomDamage()
+    private void TakeRandomDamage()
     {
         var _randomValue = Random.Range(12, 34);
         TakeDamage(_randomValue);
