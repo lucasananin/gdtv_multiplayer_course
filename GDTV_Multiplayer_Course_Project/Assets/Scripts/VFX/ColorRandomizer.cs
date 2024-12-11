@@ -7,107 +7,52 @@ public class ColorRandomizer : NetworkBehaviour
 {
     [SerializeField] SpriteRenderer[] _sprites = null;
 
-    //private Color _color = default;
-    private NetworkVariable<Color> _color = new();
-
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        //ChangeColor();
-        //ChangeColorClientRpc();
-
-        //if (!IsOwner) return;
-        //PickColor();
-        //SetSprites();
-        //SetSprites_ServerRpc();
-        //SetSprites_ClientRpc();
-
-        //Invoke(nameof(Fodase), 20f);
-
-        //if (!IsClient) return;
-        //if (IsServer) return;
-        if (IsClient)
-            _color.OnValueChanged += ChangeColor;
-
-        if (IsServer)
-            PickColor();
+        SendColorRpc();
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
-        //if (!IsClient) return;
-        //if (IsServer) return;
-        if (IsClient)
-            _color.OnValueChanged -= ChangeColor;
     }
 
-    private void ChangeColor(Color previousValue, Color newValue)
+    private void SendColorRpc()
     {
-        //if (!IsClient) return;
-        //if (!IsOwner) return;
-
-        var _count = _sprites.Length;
-
-        for (int i = 0; i < _count; i++)
-        {
-            _sprites[i].color = newValue;
-        }
-    }
-
-    private void Fodase()
-    {
-        if (IsClient) return;
+        if (!IsClient) return;
         if (!IsOwner) return;
 
-        PickColor();
-        SetSprites();
-        SetSprites_ServerRpc();
-        SetSprites_ClientRpc();
+        var _color = GetRandomColor();
+        SetSprites(_color);
+        SetSprites_ServerRpc(_color);
+        SetSprites_ClientRpc(_color);
     }
 
-    private void PickColor()
+    private Color GetRandomColor()
     {
-        _color.Value = Random.ColorHSV(0, 1, 0.4f, 0.8f, 0.6f, 1, 1, 1);
+        return Random.ColorHSV(0, 1, 0.4f, 0.8f, 0.6f, 1, 1, 1);
     }
 
-    private void SetSprites()
+    private void SetSprites(Color _color)
     {
         var _count = _sprites.Length;
 
         for (int i = 0; i < _count; i++)
         {
-            _sprites[i].color = _color.Value;
+            _sprites[i].color = _color;
         }
     }
 
     [ServerRpc]
-    private void SetSprites_ServerRpc()
+    private void SetSprites_ServerRpc(Color _color)
     {
-        SetSprites();
+        SetSprites(_color);
     }
 
     [ClientRpc]
-    private void SetSprites_ClientRpc()
+    private void SetSprites_ClientRpc(Color _color)
     {
-        SetSprites();
+        SetSprites(_color);
     }
-
-    //[ClientRpc]
-    //private void ChangeColorClientRpc()
-    //{
-    //    ChangeColor();
-    //}
-
-    //private void ChangeColor()
-    //{
-    //    //if (!IsOwner) return;
-    //    var _count = _sprites.Length;
-    //    var _randomColor = Random.ColorHSV(0, 1, 0, 1, 0.5f, 1);
-
-    //    for (int i = 0; i < _count; i++)
-    //    {
-    //        _sprites[i].color = _randomColor;
-    //    }
-    //}
 }
