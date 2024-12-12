@@ -127,7 +127,7 @@ SortingGroup:
   m_GameObject: {fileID: 441141606068294889}
   m_Enabled: 1
   m_SortingLayerID: -1527808409
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!1 &1154502523892643640
@@ -452,6 +452,7 @@ GameObject:
   - component: {fileID: 7628796628603888701}
   - component: {fileID: 8232112592696679067}
   - component: {fileID: 2035945531482267116}
+  - component: {fileID: -8606790727609416652}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -616,6 +617,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 100
+  CurrentHealth:
+    m_InternalValue: 0
 --- !u!114 &8232112592696679067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +649,20 @@ MonoBehaviour:
   _sprites:
   - {fileID: 190376188483829949}
   - {fileID: 6059790280107975688}
+--- !u!114 &-8606790727609416652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551376733347561600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf9e6784e2f8fa4298af23cbeafffc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totalCoins:
+    m_InternalValue: 0
 --- !u!1 &5007876623254345855
 GameObject:
   m_ObjectHideFlags: 0
