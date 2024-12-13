@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3103646416660002939}
   - component: {fileID: 4387960193373669511}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 5616033068923450764}
   - component: {fileID: 4528657070290372083}
   - component: {fileID: 6402554492632009105}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Coin_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 153862765
+  GlobalObjectIdHash: 851811296
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

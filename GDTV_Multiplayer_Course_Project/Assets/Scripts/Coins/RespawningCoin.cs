@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class RespawningCoin : Coin
 {
+    private Vector3 _previousPosition = default;
+
+    public event System.Action<RespawningCoin> OnCollected = null;
+
+    private void Update()
+    {
+        if (_previousPosition != transform.position)
+        {
+            Show(true);
+        }
+
+        _previousPosition = transform.position;
+    }
+
     public override int Collect()
     {
         if (!IsServer)
@@ -16,7 +30,15 @@ public class RespawningCoin : Coin
             if (_alreadyCollected) return 0;
 
             _alreadyCollected = true;
+            OnCollected?.Invoke(this);
+
             return _coinValue;
         }
+    }
+
+    internal void ResetValues()
+    {
+        _alreadyCollected = false;
+        //Show(true);
     }
 }
