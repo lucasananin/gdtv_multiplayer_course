@@ -127,7 +127,7 @@ SortingGroup:
   m_GameObject: {fileID: 441141606068294889}
   m_Enabled: 1
   m_SortingLayerID: -1527808409
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!1 &1154502523892643640
@@ -603,6 +603,7 @@ MonoBehaviour:
   _serverProjectilePrefab: {fileID: 5095503989797113566, guid: 23b5373a6ba9127499af0b742ed8e30d, type: 3}
   _clientProjectilePrefab: {fileID: 5095503989797113566, guid: 557660dab47fff240b7ab353d23d554c, type: 3}
   _muzzle: {fileID: 4566186861832006426}
+  _coinWallet: {fileID: -8606790727609416652}
   _projectileSpeed: 20
 --- !u!114 &7628796628603888701
 MonoBehaviour:

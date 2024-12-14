@@ -8,7 +8,9 @@ public class DealDamageOnContact : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D _other)
     {
-        if (_other.attachedRigidbody.TryGetComponent(out Health _health))
+        var _rb = _other.attachedRigidbody;
+
+        if (_rb is not null && _rb.TryGetComponent(out Health _health))
         {
             _health.TakeDamage(_damage);
         }

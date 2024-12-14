@@ -11,10 +11,11 @@ public class ProjectileLauncher : NetworkBehaviour
     [SerializeField] Transform _muzzle = null;
     [Space]
     [SerializeField] float _projectileSpeed = 20f;
+    [Space]
+    [SerializeField] CoinWallet _coinWallet = null;
+    [SerializeField] int _costPerShot = 1;
 
     public event System.Action OnShoot = null;
-
-    //private bool _shouldFire = false;
 
     public override void OnNetworkSpawn()
     {
@@ -30,20 +31,9 @@ public class ProjectileLauncher : NetworkBehaviour
         _inputReader.OnPrimaryFireEvent -= _inputReader_OnPrimaryFireEvent;
     }
 
-    //private void Update()
-    //{
-    //    if (!IsOwner) return;
-    //    if (!_shouldFire) return;
-
-    //    PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
-    //    SpawnDummyProjectile(_muzzle.position, _muzzle.up);
-    //}
-
     private void _inputReader_OnPrimaryFireEvent(bool _value)
     {
-        //_shouldFire = _value;
-
-        if (_value)
+        if (_value && _coinWallet.HasEnoughCoins(_costPerShot))
         {
             PrimaryFireServerRpc(_muzzle.position, _muzzle.up);
             SpawnDummyProjectile(_muzzle.position, _muzzle.up);
@@ -54,6 +44,8 @@ public class ProjectileLauncher : NetworkBehaviour
     [ServerRpc]
     private void PrimaryFireServerRpc(Vector3 _position, Vector3 _direction)
     {
+        _coinWallet.SpendCoins(_costPerShot);
+
         var _instance = Instantiate(_serverProjectilePrefab, _position, Quaternion.identity);
         _instance.transform.up = _direction;
 

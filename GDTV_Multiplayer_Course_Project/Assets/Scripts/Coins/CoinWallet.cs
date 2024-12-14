@@ -19,4 +19,15 @@ public class CoinWallet : NetworkBehaviour
             }
         }
     }
+
+    public void SpendCoins(int _value)
+    {
+        var _coins = _totalCoins.Value - _value;
+        _totalCoins.Value = Mathf.Clamp(_coins, 0, 123456);
+    }
+
+    public bool HasEnoughCoins(int _value)
+    {
+        return _totalCoins.Value >= _value;
+    }
 }
