@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class ClientSingleton : Singleton<ClientSingleton>
 {
-    private ClientGameManager _gameManager = null;
+    public ClientGameManager GameManager { get; private set; } = null;
 
-    public async Task CreateClient_Async()
+    public async Task<bool> CreateClient_Async()
     {
-        _gameManager = new ClientGameManager();
-        await _gameManager.Init_Async();
+        GameManager = new ClientGameManager();
+        return await GameManager.Init_Async();
     }
 }

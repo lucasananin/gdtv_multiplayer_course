@@ -25,12 +25,15 @@ public class ApplicationController : MonoBehaviour
         else
         {
             var _clientInstance = Instantiate(_clientPrefab);
-            await _clientInstance.CreateClient_Async();
+            bool _isAuthenticated = await _clientInstance.CreateClient_Async();
 
             var _hostInstance = Instantiate(_hostPrefab);
             _hostInstance.CreateHost();
 
-            // Go To Main Menu.
+            if (_isAuthenticated)
+            {
+                _clientInstance.GameManager.GoToMenu();
+            }
         }
     }
 }
