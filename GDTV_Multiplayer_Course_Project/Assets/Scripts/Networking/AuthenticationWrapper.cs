@@ -57,15 +57,15 @@ public static class AuthenticationWrapper
                     break;
                 }
             }
-            catch (AuthenticationException _authEx)
+            catch (AuthenticationException _authException)
             {
                 AuthState = AuthState.Error;
-                throw _authEx;
+                throw _authException;
             }
-            catch (RequestFailedException _requestEx)
+            catch (RequestFailedException _requestException)
             {
                 AuthState = AuthState.Error;
-                throw _requestEx;
+                throw _requestException;
             }
 
             _retries++;
