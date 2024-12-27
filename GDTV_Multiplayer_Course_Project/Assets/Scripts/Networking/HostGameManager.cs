@@ -14,7 +14,7 @@ public class HostGameManager
     private string _joinCode = null;
 
     private const int MAX_ALLOCATIONS = 20;
-    private const string CONNECTION_TYPE = "udp";
+    public const string CONNECTION_TYPE = "dtls";
     private const string GAME_SCENE_NAME = "Game";
 
     public async Task StartHost_Async()

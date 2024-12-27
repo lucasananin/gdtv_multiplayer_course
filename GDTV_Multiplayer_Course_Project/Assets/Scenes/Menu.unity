@@ -1903,6 +1903,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startHostButton: {fileID: 1909686812}
+  _clientButton: {fileID: 2092329262}
+  _joinInputField: {fileID: 1656819239}
 --- !u!1 &2092329260
 GameObject:
   m_ObjectHideFlags: 0
