@@ -16,9 +16,10 @@ public class HostGameManager
     private string _joinCode = null;
     private string _lobbyId = null;
 
-    private const int MAX_CONNECTIONS = 20;
+    public const int MAX_CONNECTIONS = 20;
     public const string CONNECTION_TYPE = "dtls";
-    private const string GAME_SCENE_NAME = "Game";
+    public const string JOIN_CODE_KEY = "JoinCode";
+    public const string GAME_SCENE_NAME = "Game";
 
     public async Task StartHost_Async()
     {
@@ -48,7 +49,7 @@ public class HostGameManager
             _lobbyOptions.Data = new Dictionary<string, DataObject>()
             {
                 {
-                    "JoinCode", new DataObject
+                    JOIN_CODE_KEY, new DataObject
                     (
                     visibility: DataObject.VisibilityOptions.Member,
                     value : _joinCode
