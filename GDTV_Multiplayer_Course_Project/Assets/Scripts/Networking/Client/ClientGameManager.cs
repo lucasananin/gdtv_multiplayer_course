@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -50,6 +51,14 @@ public class ClientGameManager
         var _connectionType = HostGameManager.CONNECTION_TYPE;
         var _relayServerData = new RelayServerData(_joinAllocation, _connectionType);
         _transport.SetRelayServerData(_relayServerData);
+
+        var _userData = new UserData
+        {
+            userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, NameSelector.MISSING_NAME),
+        };
+        string _payload = JsonUtility.ToJson(_userData);
+        byte[] _payloadBytes = Encoding.UTF8.GetBytes(_payload);
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = _payloadBytes;
 
         NetworkManager.Singleton.StartClient();
     }

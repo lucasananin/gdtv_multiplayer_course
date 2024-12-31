@@ -11,7 +11,8 @@ public class NameSelector : MonoBehaviour
     [SerializeField] Button _confirmButton = null;
     [SerializeField] Vector2 _nameLengthRange = default;
 
-    private const string PLAYER_NAME_KEY = "pref_player_name";
+    public const string PLAYER_NAME_KEY = "pref_player_name";
+    public const string MISSING_NAME = "Missing Name";
 
     private void Start()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -13,6 +14,7 @@ using UnityEngine;
 public class HostGameManager
 {
     private Allocation _allocation = null;
+    private NetworkServer _networkServer = null;
     private string _joinCode = null;
     private string _lobbyId = null;
 
@@ -57,7 +59,8 @@ public class HostGameManager
                 }
             };
 
-            var _lobby = await Lobbies.Instance.CreateLobbyAsync("My Lobby", MAX_CONNECTIONS, _lobbyOptions);
+            var _lobbyName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, NameSelector.MISSING_NAME);
+            var _lobby = await Lobbies.Instance.CreateLobbyAsync($"{_lobbyName}'s Lobby", MAX_CONNECTIONS, _lobbyOptions);
             _lobbyId = _lobby.Id;
 
             HostSingleton.Instance.StartCoroutine(HeartBeatLobby(15));
@@ -70,6 +73,16 @@ public class HostGameManager
         var _transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         var _relayServerData = new RelayServerData(_allocation, CONNECTION_TYPE);
         _transport.SetRelayServerData(_relayServerData);
+
+        _networkServer = new NetworkServer(NetworkManager.Singleton);
+
+        var _userData = new UserData
+        {
+            userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, NameSelector.MISSING_NAME),
+        };
+        string _payload = JsonUtility.ToJson(_userData);
+        byte[] _payloadBytes = Encoding.UTF8.GetBytes(_payload);
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = _payloadBytes;
 
         NetworkManager.Singleton.StartHost();
         NetworkManager.Singleton.SceneManager.LoadScene(GAME_SCENE_NAME, UnityEngine.SceneManagement.LoadSceneMode.Single);
