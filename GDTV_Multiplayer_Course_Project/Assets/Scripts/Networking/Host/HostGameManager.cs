@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
@@ -79,6 +80,7 @@ public class HostGameManager
         var _userData = new UserData
         {
             userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, NameSelector.MISSING_NAME),
+            userAuthId = AuthenticationService.Instance.PlayerId,
         };
         string _payload = JsonUtility.ToJson(_userData);
         byte[] _payloadBytes = Encoding.UTF8.GetBytes(_payload);

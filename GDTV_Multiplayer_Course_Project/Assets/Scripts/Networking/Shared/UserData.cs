@@ -6,4 +6,5 @@ using UnityEngine;
 public class UserData
 {
     public string userName = null;
+    public string userAuthId = null;
 }
