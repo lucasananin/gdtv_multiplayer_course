@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,7 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 
-public class HostGameManager
+public class HostGameManager : IDisposable
 {
     private Allocation _allocation = null;
     private NetworkServer _networkServer = null;
@@ -99,5 +100,26 @@ public class HostGameManager
             Lobbies.Instance.SendHeartbeatPingAsync(_lobbyId);
             yield return _waitTime;
         }
+    }
+
+    public async void Dispose()
+    {
+        HostSingleton.Instance.StopCoroutine(nameof(HeartBeatLobby));
+
+        if (!string.IsNullOrEmpty(_lobbyId))
+        {
+            try
+            {
+                await Lobbies.Instance.DeleteLobbyAsync(_lobbyId);
+            }
+            catch (LobbyServiceException _exception)
+            {
+                throw _exception;
+            }
+
+            _lobbyId = string.Empty;
+        }
+
+        _networkServer?.Dispose();
     }
 }

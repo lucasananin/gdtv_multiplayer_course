@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkServer
+public class NetworkServer : IDisposable
 {
     private NetworkManager _networkManager = null;
     private Dictionary<ulong, string> _clientIdToAuth = new();
@@ -13,8 +14,8 @@ public class NetworkServer
     {
         this._networkManager = _networkManager;
 
-        _networkManager.ConnectionApprovalCallback += ApprovalCheck;
-        _networkManager.OnServerStarted += OnNetworkReady;
+        this._networkManager.ConnectionApprovalCallback += ApprovalCheck;
+        this._networkManager.OnServerStarted += OnNetworkReady;
     }
 
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest _request, NetworkManager.ConnectionApprovalResponse _response)
@@ -40,6 +41,20 @@ public class NetworkServer
         {
             _clientIdToAuth.Remove(_clientId);
             _authIdToUserData.Remove(_authId);
+        }
+    }
+
+    public void Dispose()
+    {
+        if (_networkManager is null) return;
+
+        _networkManager.ConnectionApprovalCallback -= ApprovalCheck;
+        _networkManager.OnServerStarted -= OnNetworkReady;
+        _networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
+
+        if (_networkManager.IsListening)
+        {
+            _networkManager.Shutdown();
         }
     }
 }
