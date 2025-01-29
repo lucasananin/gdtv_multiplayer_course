@@ -25,6 +25,8 @@ public class HostGameManager : IDisposable
     public const string JOIN_CODE_KEY = "JoinCode";
     public const string GAME_SCENE_NAME = "Game";
 
+    public NetworkServer NetworkServer { get => _networkServer; private set => _networkServer = value; }
+
     public async Task StartHost_Async()
     {
         try
