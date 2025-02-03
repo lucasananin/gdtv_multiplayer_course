@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2066128224
+  GlobalObjectIdHash: 1608710603
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1008,6 +1008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d272563302afb384bb4a567588a0ac23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tank: {fileID: 2419421581468397485}
   _text: {fileID: 3896901322406705600}
 --- !u!1 &5007876623254345855
 GameObject:
