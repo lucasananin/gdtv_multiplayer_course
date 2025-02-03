@@ -9,4 +9,93 @@ public class LeaderboardPanel : NetworkBehaviour
     [SerializeField] LeaderboardSlot _slotPrefab = null;
 
     private NetworkList<LeaderboardSlotState> _leaderboardEntities = new();
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsClient)
+        {
+            _leaderboardEntities.OnListChanged += _leaderboardEntities_OnListChanged;
+
+            foreach (var _entity in _leaderboardEntities)
+            {
+                _leaderboardEntities_OnListChanged(
+                    new NetworkListEvent<LeaderboardSlotState>
+                    {
+                        Type = NetworkListEvent<LeaderboardSlotState>.EventType.Add,
+                        Value = _entity,
+                    });
+            }
+        }
+
+        if (IsServer)
+        {
+            var _tanks = FindObjectsByType<TankEntity>(FindObjectsSortMode.None);
+            int _count = _tanks.Length;
+
+            for (int i = 0; i < _count; i++)
+            {
+                HandlePlayerSpawned(_tanks[i]);
+            }
+
+            TankEntity.OnPlayerSpawned += HandlePlayerSpawned;
+            TankEntity.OnPlayerDespawned += HandlePlayerDespawned;
+        }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsClient)
+        {
+            _leaderboardEntities.OnListChanged -= _leaderboardEntities_OnListChanged;
+        }
+
+        if (IsServer)
+        {
+            TankEntity.OnPlayerSpawned -= HandlePlayerSpawned;
+            TankEntity.OnPlayerDespawned -= HandlePlayerDespawned;
+        }
+    }
+
+    private void HandlePlayerSpawned(TankEntity _tank)
+    {
+        var _entity = new LeaderboardSlotState()
+        {
+            ClientId = _tank.OwnerClientId,
+            PlayerName = _tank.PlayerName.Value,
+            Coins = 0,
+        };
+
+        _leaderboardEntities.Add(_entity);
+    }
+
+    private void HandlePlayerDespawned(TankEntity _tank)
+    {
+        if (IsServer && _tank.OwnerClientId == OwnerClientId) return;
+        if (_leaderboardEntities is null) return;
+
+        int _count = _leaderboardEntities.Count;
+
+        for (int i = _count - 1; i >= 0; i--)
+        {
+            var _entity = _leaderboardEntities[i];
+
+            if (_entity.ClientId == _tank.OwnerClientId)
+            {
+                _leaderboardEntities.Remove(_entity);
+                break;
+            }
+        }
+    }
+
+    private void _leaderboardEntities_OnListChanged(NetworkListEvent<LeaderboardSlotState> _changeEvent)
+    {
+        switch (_changeEvent.Type)
+        {
+            case NetworkListEvent<LeaderboardSlotState>.EventType.Add:
+                Instantiate(_slotPrefab, _content);
+                break;
+            default:
+                break;
+        }
+    }
 }
