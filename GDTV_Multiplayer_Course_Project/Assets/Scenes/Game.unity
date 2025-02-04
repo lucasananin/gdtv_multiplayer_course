@@ -1794,10 +1794,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coinPrefab: {fileID: -2149016024216641010, guid: b5f60cfc50371c74bb4f7d9186284e23, type: 3}
-  _maxCoins: 10
+  _maxCoins: 100
   _coinValue: 3
-  _xSpawnRange: {x: -20, y: 20}
-  _ySpawnRange: {x: -10, y: 10}
+  _xSpawnRange: {x: -50, y: 50}
+  _ySpawnRange: {x: -50, y: 50}
   _layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -1854,6 +1854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 805546172}
   _slotPrefab: {fileID: 3026157060521668358, guid: 26b0d4b58928d27428173b9b09bf8961, type: 3}
+  _entitiesToDisplay: 8
 --- !u!114 &977059455
 MonoBehaviour:
   m_ObjectHideFlags: 0
