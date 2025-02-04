@@ -8,6 +8,7 @@ public class LeaderboardPanel : NetworkBehaviour
 {
     [SerializeField] Transform _content = null;
     [SerializeField] LeaderboardSlot _slotPrefab = null;
+    [SerializeField] int _entitiesToDisplay = 8;
 
     private NetworkList<LeaderboardSlotState> _leaderboardEntities = new();
     private List<LeaderboardSlot> _uiSlots = new();
@@ -149,6 +150,27 @@ public class LeaderboardPanel : NetworkBehaviour
 
             default:
                 break;
+        }
+
+        _uiSlots.Sort((x, y) => y.Coins.CompareTo(x.Coins));
+        int _count = _uiSlots.Count;
+        for (int i = 0; i < _count; i++)
+        {
+            _uiSlots[i].transform.SetSiblingIndex(i);
+            _uiSlots[i].UpdateVisuals();
+            bool _shouldShow = i <= _entitiesToDisplay;
+            _uiSlots[i].gameObject.SetActive(_shouldShow);
+        }
+
+        var _myDisplay = _uiSlots.FirstOrDefault(x => x.ClientId == NetworkManager.Singleton.LocalClientId);
+
+        if (_myDisplay != null)
+        {
+            if (_myDisplay.transform.GetSiblingIndex() >= _entitiesToDisplay)
+            {
+                _content.GetChild(_entitiesToDisplay - 1).gameObject.SetActive(false);
+                _myDisplay.gameObject.SetActive(true);
+            }
         }
     }
 }

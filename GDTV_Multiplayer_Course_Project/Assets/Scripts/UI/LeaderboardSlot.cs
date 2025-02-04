@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class LeaderboardSlot : MonoBehaviour
 {
     [SerializeField] TMP_Text _displayText = null;
+    [SerializeField] Color _myColor = default;
 
     private ulong _clientId = default;
     private FixedString32Bytes _playerName = default;
@@ -20,6 +22,11 @@ public class LeaderboardSlot : MonoBehaviour
         this._clientId = _clientId;
         this._playerName = _playerName;
 
+        if (_clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            _displayText.color = _myColor;
+        }
+
         UpdateCoins(_coins);
     }
 
@@ -31,6 +38,7 @@ public class LeaderboardSlot : MonoBehaviour
 
     public void UpdateVisuals()
     {
-        _displayText.text = $"{1}. {_playerName} ({_coins})";
+        var _index = transform.GetSiblingIndex() + 1;
+        _displayText.text = $"{_index}. {_playerName} ({_coins})";
     }
 }
