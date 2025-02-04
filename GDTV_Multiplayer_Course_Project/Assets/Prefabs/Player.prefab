@@ -874,6 +874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 7628796628603888701}
+  _coinWallet: {fileID: -8606790727609416652}
 --- !u!114 &3048155447475508159
 MonoBehaviour:
   m_ObjectHideFlags: 0

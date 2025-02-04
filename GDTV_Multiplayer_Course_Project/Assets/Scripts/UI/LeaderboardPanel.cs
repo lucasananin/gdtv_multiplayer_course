@@ -68,6 +68,7 @@ public class LeaderboardPanel : NetworkBehaviour
         };
 
         _leaderboardEntities.Add(_entity);
+        _tank.CoinWallet.TotalCoins.OnValueChanged += (_oldCoins, _newCoins) => HandleCoinsChanged(_tank.OwnerClientId, _newCoins);
     }
 
     private void HandlePlayerDespawned(TankEntity _tank)
@@ -86,6 +87,27 @@ public class LeaderboardPanel : NetworkBehaviour
                 _leaderboardEntities.Remove(_entity);
                 break;
             }
+        }
+
+        _tank.CoinWallet.TotalCoins.OnValueChanged -= (_oldCoins, _newCoins) => HandleCoinsChanged(_tank.OwnerClientId, _newCoins);
+    }
+
+    private void HandleCoinsChanged(ulong _clientId, int _newCoinValue)
+    {
+        int _count = _leaderboardEntities.Count;
+
+        for (int i = 0; i < _count; i++)
+        {
+            if (_leaderboardEntities[i].ClientId != _clientId) continue;
+
+            _leaderboardEntities[i] = new LeaderboardSlotState
+            {
+                ClientId = _leaderboardEntities[i].ClientId,
+                PlayerName = _leaderboardEntities[i].PlayerName,
+                Coins = _newCoinValue,
+            };
+
+            return;
         }
     }
 
