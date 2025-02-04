@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class LeaderboardPanel : NetworkBehaviour
     [SerializeField] LeaderboardSlot _slotPrefab = null;
 
     private NetworkList<LeaderboardSlotState> _leaderboardEntities = new();
+    private List<LeaderboardSlot> _uiSlots = new();
 
     public override void OnNetworkSpawn()
     {
@@ -92,8 +94,37 @@ public class LeaderboardPanel : NetworkBehaviour
         switch (_changeEvent.Type)
         {
             case NetworkListEvent<LeaderboardSlotState>.EventType.Add:
-                Instantiate(_slotPrefab, _content);
+                if (!_uiSlots.Any(x => x.ClientId == _changeEvent.Value.ClientId))
+                {
+                    var _instance = Instantiate(_slotPrefab, _content);
+                    _instance.Init(_changeEvent.Value.ClientId, _changeEvent.Value.PlayerName, _changeEvent.Value.Coins);
+                    _uiSlots.Add(_instance);
+                }
+
                 break;
+
+            case NetworkListEvent<LeaderboardSlotState>.EventType.Remove:
+                var _uiSlotToRemove = _uiSlots.FirstOrDefault(x => x.ClientId == _changeEvent.Value.ClientId);
+
+                if (_uiSlotToRemove is not null)
+                {
+                    _uiSlotToRemove.transform.SetParent(null);
+                    Destroy(_uiSlotToRemove.gameObject);
+                    _uiSlots.Remove(_uiSlotToRemove);
+                }
+
+                break;
+
+            case NetworkListEvent<LeaderboardSlotState>.EventType.Value:
+                var _uiSlotToUpdate = _uiSlots.FirstOrDefault(x => x.ClientId == _changeEvent.Value.ClientId);
+
+                if (_uiSlotToUpdate is not null)
+                {
+                    _uiSlotToUpdate.UpdateCoins(_changeEvent.Value.Coins);
+                }
+
+                break;
+
             default:
                 break;
         }
