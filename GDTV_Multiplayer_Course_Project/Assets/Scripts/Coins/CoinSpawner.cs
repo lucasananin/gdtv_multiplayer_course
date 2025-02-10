@@ -13,6 +13,7 @@ public class CoinSpawner : NetworkBehaviour
     [SerializeField] LayerMask _layerMask = default;
 
     private Collider2D[] _results = new Collider2D[9];
+    private float _coinRadius = 2f;
 
     public override void OnNetworkSpawn()
     {
@@ -28,7 +29,7 @@ public class CoinSpawner : NetworkBehaviour
     {
         var _instance = Instantiate(_coinPrefab, GetSpawnPoint(), Quaternion.identity, transform);
         _instance.SetValue(_coinValue);
-        _instance.GetComponent<NetworkObject>().Spawn();
+        _instance.NetworkObject.Spawn();
 
         _instance.OnCollected += RepositionCollectedCoin;
     }
